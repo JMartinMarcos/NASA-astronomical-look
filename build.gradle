@@ -28,6 +28,9 @@ buildscript {
         retrofitVersion = '2.6.2'
         coilVersion = '0.7.0'
         okhttp3Version = '4.2.0'
+        threeTenAbpVersion = '1.2.1'
+        threeTenBpVersion = '1.4.0' // used only for unit testing
+        funktionaleVersion = '1.2'
     }
 }
 
