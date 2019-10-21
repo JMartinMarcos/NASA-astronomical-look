@@ -12,6 +12,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        dataBinding {
+            enabled = true
+        }
     }
     buildTypes {
         release {
@@ -53,6 +57,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
+    kapt "com.android.databinding:compiler:$gradle_version"
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
 
@@ -72,6 +79,6 @@ dependencies {
     implementation("io.coil-kt:coil-gif:0.7.0")
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

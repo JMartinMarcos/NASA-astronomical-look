@@ -3,9 +3,14 @@ package com.jmm.nasaastronomicallook.pictureoftheday.interactor
 import com.jmm.nasaastronomicallook.common.Interactor
 import com.jmm.nasaastronomicallook.common.asyncSeq
 import com.jmm.nasaastronomicallook.domain.AstronomyPictureoftheDay
+import com.jmm.nasaastronomicallook.domain.repository.AstronomyPictureOfTheDayRepository
+import org.funktionale.either.Either
 
 
-class GetAstronomyPictureOfTheDayInteractor : Interactor<Unit, AstronomyPictureoftheDay> {
+class GetAstronomyPictureOfTheDayInteractor constructor(
+    private val repository: AstronomyPictureOfTheDayRepository
+) : Interactor<Unit, AstronomyPictureoftheDay>() {
 
-    fun getAstronomyPictureOfTheDay() = asyncSeq {  }
+    override suspend fun execute(request: Unit): Either<Throwable, AstronomyPictureoftheDay> =
+        asyncSeq { repository.getAstronomyPictureOfTheDay() }
 }

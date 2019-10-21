@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.funktionale.either.Either
 import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +21,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 const val API_KEY = "DEMO_KEY"
+const val DATE_REQUEST_FORMAT = "yyyy-MM-dd" // 2019-09-22
 
 class NasaApiClient {
 
@@ -32,10 +34,9 @@ class NasaApiClient {
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val clientBuilder = OkHttpClient.Builder()
-        clientBuilder.addInterceptor(httpLoggingInterceptor)
-        clientBuilder.connectTimeout(30, TimeUnit.SECONDS)
-        clientBuilder.readTimeout(30, TimeUnit.SECONDS)
-        clientBuilder.writeTimeout(30, TimeUnit.SECONDS)
+        .addNetworkInterceptor(httpLoggingInterceptor)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
 
         clientBuilder.addInterceptor { chain ->
             val originalRequest = chain.request()
@@ -137,6 +138,6 @@ class NasaApiClient {
     }
 
     fun getAstronomyPictureOfTheDay() = callService {
-        service.getAPOD(LocalDate.now().toString(), true, API_KEY)
+        service.getAPOD(LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern(DATE_REQUEST_FORMAT)), true, API_KEY)
     }
 }
