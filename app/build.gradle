@@ -17,16 +17,27 @@ android {
             enabled = true
         }
     }
+
     buildTypes {
+        debug{
+            debuggable = true
+            buildConfigField "String", 'API_URL', '"https://api.nasa.gov/"'
+            buildConfigField "String", 'API_KEY', '"DEMO_KEY"'
+        }
+
         release {
             minifyEnabled false
+            buildConfigField "String", 'API_URL', '"https://api.nasa.gov/"'
+            buildConfigField "String", 'API_KEY', '"nVpEt8pCc1Fd09DChBPzhJ4A3WtKlxvdAO9K9GWI"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 // work-runtime-ktx 2.1.0 and above now requires Java 8
     kotlinOptions {
         jvmTarget = "1.8"
@@ -74,6 +85,11 @@ dependencies {
     testImplementation("org.threeten:threetenbp:$rootProject.threeTenBpVersion") {
         exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
     }
+
+    implementation("com.google.dagger:dagger:$rootProject.daggerVersion")
+    kapt("com.google.dagger:dagger-compiler:$rootProject.daggerVersion")
+    kapt("com.google.dagger:dagger-android-processor:$rootProject.daggerVersion")
+    implementation("com.google.dagger:dagger-android-support:$rootProject.daggerVersion")
 
     implementation("io.coil-kt:coil:0.7.0")
     implementation("io.coil-kt:coil-gif:0.7.0")

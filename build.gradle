@@ -32,6 +32,7 @@ buildscript {
         threeTenAbpVersion = '1.2.1'
         threeTenBpVersion = '1.4.0' // used only for unit testing
         funktionaleVersion = '1.2'
+        daggerVersion = '2.24'
     }
 }
 

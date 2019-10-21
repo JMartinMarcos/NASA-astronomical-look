@@ -6,12 +6,13 @@ import com.jmm.nasaastronomicallook.data.mapper.MapperExecutor
 import com.jmm.nasaastronomicallook.domain.AstronomyPictureoftheDay
 import com.jmm.nasaastronomicallook.domain.repository.AstronomyPictureOfTheDayRepository
 import org.funktionale.either.Either
+import javax.inject.Inject
 
-class AstronomyPictureOfTheDayRepositoryImpl : AstronomyPictureOfTheDayRepository {
-
-    private val apiClient = NasaApiClient()
-    private val astronomyPictureMapper = AstronomyPictureOfTheDayMapper()
-    private val mapperExecutor = MapperExecutor()
+class AstronomyPictureOfTheDayRepositoryImpl @Inject constructor(
+    private val apiClient: NasaApiClient,
+    private val astronomyPictureMapper: AstronomyPictureOfTheDayMapper,
+    private val mapperExecutor: MapperExecutor
+) : AstronomyPictureOfTheDayRepository {
 
     override fun getAstronomyPictureOfTheDay(): Either<Exception, AstronomyPictureoftheDay> {
         val response = apiClient.getAstronomyPictureOfTheDay()
