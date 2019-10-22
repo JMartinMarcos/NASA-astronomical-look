@@ -4,5 +4,5 @@ import com.jmm.nasaastronomicallook.domain.AstronomyPictureoftheDay
 import org.funktionale.either.Either
 
 interface AstronomyPictureOfTheDayRepository {
-    fun getAstronomyPictureOfTheDay(): Either<Exception, AstronomyPictureoftheDay>
+   suspend fun getAstronomyPictureOfTheDay(): Either<Exception, AstronomyPictureoftheDay>
 }
