@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
+import com.jmm.nasaastronomicallook.common.defaultFormat
 import com.jmm.nasaastronomicallook.data.entity.ErrorInfoEntity
 import com.jmm.nasaastronomicallook.domain.exception.UnknownException
 import org.funktionale.either.Either
@@ -16,15 +17,13 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-const val DATE_REQUEST_FORMAT = "yyyy-MM-dd" // 2019-09-22
-
 class NasaApiClient @Inject constructor(
     private val service: NasaService,
     private val gson: Gson,
     private val apiKey: String
 ) {
 
-    private fun <T> callService(callback: () -> Call<T>): Either<Exception, T> {
+   private inline fun <T> callService(callback: () -> Call<T>): Either<Exception, T> {
         return try {
             val response = callback().execute()
             when {
@@ -43,6 +42,25 @@ class NasaApiClient @Inject constructor(
         } catch (exception: Exception) {
             return Either.left(UnknownException())
         }
+    }
+
+    private suspend inline fun <reified T> suspendCallService(crossinline getCall: () -> Call<T>): Either<Exception, T> = suspendCoroutine { continuation ->
+        getCall().enqueue(object : Callback<T> {
+            override fun onFailure(call: Call<T>, t: Throwable) {
+                continuation.resume(Either.left(UnknownException()))
+            }
+
+            override fun onResponse(call: Call<T>, response: Response<T>) {
+                val body = response.body()
+                continuation.resume(
+                    when {
+                        response.isValid() && body != null -> Either.right(body)
+                        response.isValid() && Unit is T -> Either.right(Unit as T)
+                        else -> Either.left(validateResponseError(response))
+                    }
+                )
+            }
+        })
     }
 
     private fun <T> Response<T>.isValid(): Boolean {
@@ -65,13 +83,7 @@ class NasaApiClient @Inject constructor(
         }
     }
 
-    fun getAstronomyPictureOfTheDay() = callService {
-        service.getAPOD(
-            LocalDate.now().format(
-                DateTimeFormatter.ofPattern(
-                    DATE_REQUEST_FORMAT
-                )
-            ), true, apiKey
-        )
+    suspend fun getAstronomyPictureOfTheDay() = suspendCallService {
+        service.getAPOD(LocalDate.now().minusDays(2).defaultFormat(), true, apiKey)
     }
 }

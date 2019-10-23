@@ -14,7 +14,7 @@ class AstronomyPictureOfTheDayRepositoryImpl @Inject constructor(
     private val mapperExecutor: MapperExecutor
 ) : AstronomyPictureOfTheDayRepository {
 
-    override fun getAstronomyPictureOfTheDay(): Either<Exception, AstronomyPictureoftheDay> {
+   override suspend fun  getAstronomyPictureOfTheDay(): Either<Exception, AstronomyPictureoftheDay> {
         val response = apiClient.getAstronomyPictureOfTheDay()
         return if (response.isRight()) {
             mapperExecutor { astronomyPictureMapper.mapAstronomyPictureOfTheDay(response.right().get()) }

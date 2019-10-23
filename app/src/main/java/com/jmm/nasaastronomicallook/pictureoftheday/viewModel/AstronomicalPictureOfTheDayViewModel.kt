@@ -12,18 +12,17 @@ class AstronomicalPictureOfTheDayViewModel constructor(
     private val getAstronomyPictureOfTheDayInteractor: GetAstronomyPictureOfTheDayInteractor
 ) : ViewModel() {
 
-
     private val _pictureOfTheDay: MutableLiveData<AstronomyPictureoftheDay> = MutableLiveData()
+    private var _errorResponse: MutableLiveData<Throwable?> = MutableLiveData()
+
     val pictureOfTheDay: LiveData<AstronomyPictureoftheDay> get() = _pictureOfTheDay
+    val errorResponse: LiveData<Throwable?> get() = _errorResponse
 
     init {
         viewModelScope.launch {
-            getAstronomyPictureOfTheDayInteractor(
-                Unit,
-                onSuccess = { astronomyPicture ->
-                    _pictureOfTheDay.value = astronomyPicture
-                }
-            )
+           val (error, response) = getAstronomyPictureOfTheDayInteractor(Unit)
+            _pictureOfTheDay.value = response
+            error?.let { _errorResponse.value = it }
         }
     }
 
