@@ -87,10 +87,8 @@ dependencies {
         exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
     }
 
-    implementation("com.google.dagger:dagger:$rootProject.daggerVersion")
-    kapt("com.google.dagger:dagger-compiler:$rootProject.daggerVersion")
-    kapt("com.google.dagger:dagger-android-processor:$rootProject.daggerVersion")
-    implementation("com.google.dagger:dagger-android-support:$rootProject.daggerVersion")
+    implementation 'org.koin:koin-android-scope:2.0.1'
+    implementation 'org.koin:koin-android-viewmodel:2.0.1'
 
     implementation("io.coil-kt:coil:0.7.0")
     implementation("io.coil-kt:coil-gif:0.7.0")
