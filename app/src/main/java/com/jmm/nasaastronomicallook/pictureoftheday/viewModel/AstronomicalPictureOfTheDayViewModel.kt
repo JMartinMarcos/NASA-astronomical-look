@@ -8,7 +8,7 @@ import com.jmm.nasaastronomicallook.domain.AstronomyPictureoftheDay
 import com.jmm.nasaastronomicallook.pictureoftheday.interactor.GetAstronomyPictureOfTheDayInteractor
 import kotlinx.coroutines.launch
 
-class AstronomicalPictureOfTheDayViewModel constructor(
+class AstronomicalPictureOfTheDayViewModel(
     private val getAstronomyPictureOfTheDayInteractor: GetAstronomyPictureOfTheDayInteractor
 ) : ViewModel() {
 

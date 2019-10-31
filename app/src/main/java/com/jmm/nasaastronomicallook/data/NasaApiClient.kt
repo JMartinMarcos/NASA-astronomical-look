@@ -23,27 +23,6 @@ class NasaApiClient @Inject constructor(
     private val apiKey: String
 ) {
 
-   private inline fun <T> callService(callback: () -> Call<T>): Either<Exception, T> {
-        return try {
-            val response = callback().execute()
-            when {
-                response.isValid() -> {
-                    if (response.body() != null) {
-                        Either.right(response.body()!!)
-                    } else {
-                        if (response.body() is Unit?)
-                            Either.right(Unit as T)
-                        else
-                            Either.left(validateResponseError(response))
-                    }
-                }
-                else -> Either.left(validateResponseError(response))
-            }
-        } catch (exception: Exception) {
-            return Either.left(UnknownException())
-        }
-    }
-
     private suspend inline fun <reified T> suspendCallService(crossinline getCall: () -> Call<T>): Either<Exception, T> = suspendCoroutine { continuation ->
         getCall().enqueue(object : Callback<T> {
             override fun onFailure(call: Call<T>, t: Throwable) {
@@ -78,12 +57,11 @@ class NasaApiClient @Inject constructor(
 
     private fun parseProblem(typeError: ErrorInfoEntity): Exception {
         return when (typeError.type) {
-            //     "problem:credit-card-date-validation-error" -> CreditCardDateException(typeError.detail)
             else -> UnknownException()
         }
     }
 
     suspend fun getAstronomyPictureOfTheDay() = suspendCallService {
-        service.getAPOD(LocalDate.now().minusDays(2).defaultFormat(), true, apiKey)
+        service.getAPOD(LocalDate.now().defaultFormat(), true, apiKey)
     }
 }

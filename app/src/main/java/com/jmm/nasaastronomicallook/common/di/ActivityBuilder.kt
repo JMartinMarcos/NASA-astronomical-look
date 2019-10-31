@@ -11,6 +11,4 @@ abstract class ActivityBuilder {
   @ContributesAndroidInjector(modules = [(AstronomicalPictureModule::class)])
   @PerActivity
   internal abstract fun bindAstronomicalPictureDetail(): AstronomicalPictureDetailActivity
-
-
 }

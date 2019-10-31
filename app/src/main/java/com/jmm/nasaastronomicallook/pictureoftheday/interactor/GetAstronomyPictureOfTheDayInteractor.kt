@@ -6,7 +6,7 @@ import com.jmm.nasaastronomicallook.domain.AstronomyPictureoftheDay
 import com.jmm.nasaastronomicallook.domain.repository.AstronomyPictureOfTheDayRepository
 import org.funktionale.either.Either
 
-class GetAstronomyPictureOfTheDayInteractor constructor(
+class GetAstronomyPictureOfTheDayInteractor (
     private val repository: AstronomyPictureOfTheDayRepository
 ) : Interactor<Unit, AstronomyPictureoftheDay>() {
 
