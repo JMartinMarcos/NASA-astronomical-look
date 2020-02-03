@@ -6,6 +6,7 @@ import com.jmm.nasaastronomicallook.BuildConfig
 import com.jmm.nasaastronomicallook.data.NasaApiClient
 import com.jmm.nasaastronomicallook.data.NasaService
 import com.jmm.nasaastronomicallook.data.mapper.MapperExecutor
+import com.jmm.nasaastronomicallook.pictureoftheday.di.pictureOfTheDayModule
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -43,8 +44,9 @@ val networkModule = module {
 
     val nasaService = retrofit.create(NasaService::class.java)
 
-    val nasaApiClient = NasaApiClient(nasaService, gSon, apiKey)
-
-    single { nasaApiClient }
+    single { NasaApiClient(nasaService, gSon, apiKey) }
 }
+
+val moduleList = listOf(appModule, networkModule, pictureOfTheDayModule)
+
 

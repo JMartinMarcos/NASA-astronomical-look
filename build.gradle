@@ -33,6 +33,18 @@ buildscript {
         threeTenBpVersion = '1.4.0' // used only for unit testing
         funktionaleVersion = '1.2'
         daggerVersion = '2.24'
+        koin_version = '2.0.1'
+        //Test libraries
+        junit_version = '4.12'
+        robolectric_version = '3.8'
+        mockito_version = '2.19.0'
+        mockitoKotlin_version = '1.6.0'
+        retrofitMock_version = '2.3.0'
+        okhttp3Mock_version = '3.9.1'
+        powermock_version = '2.0.0-beta.5'
+        assertj_version = '1.1.0'
+        kluent_version = '1.14'
+
     }
 }
 

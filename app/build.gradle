@@ -19,7 +19,7 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
             debuggable = true
             buildConfigField "String", 'API_URL', '"https://api.nasa.gov/"'
             buildConfigField "String", 'API_KEY', '"DEMO_KEY"'
@@ -51,6 +51,10 @@ android {
 
     androidExtensions {
         experimental = true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -87,13 +91,30 @@ dependencies {
         exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
     }
 
-    implementation 'org.koin:koin-android-scope:2.0.1'
-    implementation 'org.koin:koin-android-viewmodel:2.0.1'
+    implementation("org.koin:koin-android-scope:$koin_version")
+    implementation("org.koin:koin-android-viewmodel:$koin_version")
+    // Koin for Unit tests
+    testImplementation("org.koin:koin-test:$koin_version")
 
     implementation("io.coil-kt:coil:0.7.0")
     implementation("io.coil-kt:coil-gif:0.7.0")
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation ('junit:junit:4.12')
+    androidTestImplementation ('androidx.test.ext:junit:1.1.1')
+    androidTestImplementation ('androidx.test.espresso:espresso-core:3.2.0')
+
+    //TEST LIBRERIES
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    testImplementation("junit:junit:$junit_version")
+    testImplementation("org.mockito:mockito-core:$mockito_version")
+    testImplementation("com.nhaarman:mockito-kotlin:$mockitoKotlin_version")
+    testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitMock_version")
+    testImplementation("com.squareup.okhttp3:mockwebserver:$okhttp3Mock_version")
+    testImplementation("org.powermock:powermock-core:$powermock_version")
+    testImplementation("org.powermock:powermock-module-junit4:$powermock_version")
+    testImplementation("org.powermock:powermock-module-junit4-rule:$powermock_version")
+    testImplementation("org.powermock:powermock-api-mockito2:$powermock_version")
+    testImplementation("com.squareup.assertj:assertj-android:$assertj_version")
+    testImplementation("org.amshove.kluent:kluent:$kluent_version")
+
 }

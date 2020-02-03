@@ -6,9 +6,7 @@ import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.util.CoilUtils
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.jmm.nasaastronomicallook.common.di.appModule
-import com.jmm.nasaastronomicallook.common.di.networkModule
-import com.jmm.nasaastronomicallook.pictureoftheday.di.pictureOfTheDayModule
+import com.jmm.nasaastronomicallook.common.di.moduleList
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -20,10 +18,11 @@ class NasaAstronomicalLookApp : Application() {
         super.onCreate()
         AndroidThreeTen.init(this)
         configImageLoader()
-        startKoin{
+
+        startKoin {
             androidLogger()
             androidContext(this@NasaAstronomicalLookApp)
-            modules(listOf(appModule, networkModule, pictureOfTheDayModule))
+            modules(moduleList)
         }
     }
 
