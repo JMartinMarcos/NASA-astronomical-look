@@ -1,22 +1,29 @@
 package com.jmm.nasaastronomicallook
 
+import android.app.Application
 import coil.Coil
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.util.CoilUtils
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.jmm.nasaastronomicallook.common.di.DaggerAppComponent
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import com.jmm.nasaastronomicallook.common.di.moduleList
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
-
-class NasaAstronomicalLookApp : DaggerApplication() {
+class NasaAstronomicalLookApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
         AndroidThreeTen.init(this)
         configImageLoader()
+
+        startKoin {
+            androidLogger()
+            androidContext(this@NasaAstronomicalLookApp)
+            modules(moduleList)
+        }
     }
 
     private fun configImageLoader() {
@@ -38,11 +45,4 @@ class NasaAstronomicalLookApp : DaggerApplication() {
             }
         }
     }
-
-    override fun applicationInjector(): AndroidInjector<NasaAstronomicalLookApp> {
-        val component = DaggerAppComponent.builder().application(this).build()
-        component.inject(this)
-        return component
-    }
-
 }

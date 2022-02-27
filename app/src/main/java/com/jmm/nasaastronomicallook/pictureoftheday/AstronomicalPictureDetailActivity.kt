@@ -2,23 +2,19 @@ package com.jmm.nasaastronomicallook.pictureoftheday
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.jmm.nasaastronomicallook.R
-import com.jmm.nasaastronomicallook.common.createViewModel
 import com.jmm.nasaastronomicallook.databinding.ActivityAstronomicalPictureDetailBinding
 import com.jmm.nasaastronomicallook.pictureoftheday.viewModel.AstronomicalPictureOfTheDayViewModel
-import dagger.android.support.DaggerAppCompatActivity
-import javax.inject.Inject
+import org.koin.android.scope.currentScope
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class AstronomicalPictureDetailActivity : DaggerAppCompatActivity() {
+class AstronomicalPictureDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAstronomicalPictureDetailBinding
-
-    @Inject
-    lateinit var astronomicalPictureOfTheDayViewModel: AstronomicalPictureOfTheDayViewModel
-
-    private val viewModel by lazy { createViewModel { astronomicalPictureOfTheDayViewModel } }
+    private val viewModel: AstronomicalPictureOfTheDayViewModel by currentScope.viewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -6,7 +6,6 @@ import com.jmm.nasaastronomicallook.data.mapper.MapperExecutor
 import com.jmm.nasaastronomicallook.domain.AstronomyPictureoftheDay
 import com.jmm.nasaastronomicallook.domain.repository.AstronomyPictureOfTheDayRepository
 import org.funktionale.either.Either
-import javax.inject.Inject
 
 class AstronomyPictureOfTheDayRepositoryImpl(
     private val apiClient: NasaApiClient,

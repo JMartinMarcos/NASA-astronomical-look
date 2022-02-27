@@ -1,8 +1,5 @@
 package com.jmm.nasaastronomicallook.common
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -27,16 +24,3 @@ suspend fun <T> asyncSeq(block: suspend CoroutineScope.() -> T): T {
 
 fun LocalDate.defaultFormat(): String =
     format(DateTimeFormatter.ofPattern(DATE_REQUEST_FORMAT))
-
-inline fun <reified T : ViewModel> AppCompatActivity.createViewModel(crossinline factory: () -> T): T =
-    T::class.java.let { clazz ->
-        ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                if (modelClass == clazz) {
-                    @Suppress("UNCHECKED_CAST")
-                    return factory() as T
-                }
-                throw IllegalArgumentException("Unexpected argument: $modelClass")
-            }
-        }).get(clazz)
-    }
