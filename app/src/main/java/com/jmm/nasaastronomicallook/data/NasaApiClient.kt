@@ -1,10 +1,10 @@
 package com.jmm.nasaastronomicallook.data
 
 import com.google.gson.Gson
+import com.jmm.nasaastronomicallook.archetype.Result
 import com.jmm.nasaastronomicallook.common.defaultFormat
 import com.jmm.nasaastronomicallook.data.entity.ErrorInfoEntity
 import com.jmm.nasaastronomicallook.domain.exception.UnknownException
-import org.funktionale.either.Either
 import org.threeten.bp.LocalDate
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,20 +18,20 @@ class NasaApiClient(
     private val apiKey: String
 ) {
 
-    private suspend inline fun <reified T> suspendCallService(crossinline getCall: () -> Call<T>): Either<Exception, T> =
+    private suspend inline fun <reified T> suspendCallService(crossinline getCall: () -> Call<T>): Result<Exception, T> =
         suspendCoroutine { continuation ->
             getCall().enqueue(object : Callback<T> {
                 override fun onFailure(call: Call<T>, t: Throwable) {
-                    continuation.resume(Either.left(UnknownException()))
+                    continuation.resume(Result.Error(UnknownException()))
                 }
 
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     val body = response.body()
                     continuation.resume(
                         when {
-                            response.isValid() && body != null -> Either.right(body)
-                            response.isValid() && Unit is T -> Either.right(Unit as T)
-                            else -> Either.left(validateResponseError(response))
+                            response.isValid() && body != null -> Result.Success(body)
+                            response.isValid() && Unit is T -> Result.Success(Unit as T)
+                            else -> Result.Error(validateResponseError(response))
                         }
                     )
                 }

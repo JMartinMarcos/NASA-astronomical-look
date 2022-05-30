@@ -5,24 +5,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmm.nasaastronomicallook.domain.AstronomyPictureoftheDay
-import com.jmm.nasaastronomicallook.pictureoftheday.interactor.GetAstronomyPictureOfTheDayInteractor
+import com.jmm.nasaastronomicallook.domain.useCase.GetAstronomyPictureOfTheDayUseCase
 import kotlinx.coroutines.launch
 
 class AstronomicalPictureOfTheDayViewModel(
-    private val getAstronomyPictureOfTheDayInteractor: GetAstronomyPictureOfTheDayInteractor
+    private val getAstronomyPictureOfTheDayUseCase: GetAstronomyPictureOfTheDayUseCase
 ) : ViewModel() {
 
     private val _pictureOfTheDay: MutableLiveData<AstronomyPictureoftheDay> = MutableLiveData()
-    private var _errorResponse: MutableLiveData<Throwable?> = MutableLiveData()
+    private var _errorResponse: MutableLiveData<Exception> = MutableLiveData()
 
     val pictureOfTheDay: LiveData<AstronomyPictureoftheDay> get() = _pictureOfTheDay
-    val errorResponse: LiveData<Throwable?> get() = _errorResponse
+    val errorResponse: LiveData<Exception> get() = _errorResponse
 
     init {
         viewModelScope.launch {
-           val (error, response) = getAstronomyPictureOfTheDayInteractor(Unit)
-            _pictureOfTheDay.value = response
-            error?.let { _errorResponse.value = it }
+           getAstronomyPictureOfTheDayUseCase(Unit)
+               .fold(
+               fnL = { _errorResponse.postValue(it) },
+               fnR = { _pictureOfTheDay.postValue(it) }
+           )
         }
     }
 

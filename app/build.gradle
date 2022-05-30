@@ -83,8 +83,6 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion")
     implementation("com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3Version")
 
-    implementation("org.funktionale:funktionale-either:$rootProject.funktionaleVersion")
-
     implementation("com.jakewharton.threetenabp:threetenabp:$rootProject.threeTenAbpVersion")
 
     testImplementation("org.threeten:threetenbp:$rootProject.threeTenBpVersion") {

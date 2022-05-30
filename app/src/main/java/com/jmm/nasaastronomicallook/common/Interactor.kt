@@ -1,8 +1,7 @@
 package com.jmm.nasaastronomicallook.common
 
-import org.funktionale.either.Either
+import com.jmm.nasaastronomicallook.archetype.Result
 
-abstract class Interactor<TReq, TRes> {
-    abstract suspend fun execute(request: TReq): Either<Throwable, TRes>
-    suspend operator fun invoke(request: TReq) = execute(request)
+interface Interactor<TReq, TRes> {
+    suspend operator fun invoke(request: TReq): Result<Exception, TRes>
 }

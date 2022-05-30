@@ -1,15 +1,15 @@
-package com.jmm.nasaastronomicallook.pictureoftheday.interactor
+package com.jmm.nasaastronomicallook.domain.useCase
 
+import com.jmm.nasaastronomicallook.archetype.Result
 import com.jmm.nasaastronomicallook.common.Interactor
 import com.jmm.nasaastronomicallook.common.asyncSeq
 import com.jmm.nasaastronomicallook.domain.AstronomyPictureoftheDay
 import com.jmm.nasaastronomicallook.domain.repository.AstronomyPictureOfTheDayRepository
-import org.funktionale.either.Either
 
-class GetAstronomyPictureOfTheDayInteractor (
+class GetAstronomyPictureOfTheDayUseCase(
     private val repository: AstronomyPictureOfTheDayRepository
-) : Interactor<Unit, AstronomyPictureoftheDay>() {
+) : Interactor<Unit, AstronomyPictureoftheDay> {
 
-    override suspend fun execute(request: Unit): Either<Throwable, AstronomyPictureoftheDay> =
+    override suspend operator fun invoke(request: Unit): Result<Exception, AstronomyPictureoftheDay> =
         asyncSeq { repository.getAstronomyPictureOfTheDay() }
 }
