@@ -6,7 +6,7 @@ import com.jmm.nasaastronomicallook.domain.repository.AstronomyPictureOfTheDayRe
 import com.jmm.nasaastronomicallook.pictureoftheday.AstronomicalPictureDetailActivity
 import com.jmm.nasaastronomicallook.domain.useCase.GetAstronomyPictureOfTheDayUseCase
 import com.jmm.nasaastronomicallook.pictureoftheday.viewModel.AstronomicalPictureOfTheDayViewModel
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

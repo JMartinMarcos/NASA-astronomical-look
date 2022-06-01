@@ -7,10 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.jmm.nasaastronomicallook.domain.AstronomyPictureoftheDay
 import com.jmm.nasaastronomicallook.domain.useCase.GetAstronomyPictureOfTheDayUseCase
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
 
 class AstronomicalPictureOfTheDayViewModel(
     private val getAstronomyPictureOfTheDayUseCase: GetAstronomyPictureOfTheDayUseCase
-) : ViewModel() {
+) : ViewModel(), KoinComponent {
 
     private val _pictureOfTheDay: MutableLiveData<AstronomyPictureoftheDay> = MutableLiveData()
     private var _errorResponse: MutableLiveData<Exception> = MutableLiveData()

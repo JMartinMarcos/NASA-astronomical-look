@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class NasaAstronomicalLookApp : Application() {
 
@@ -20,7 +21,7 @@ class NasaAstronomicalLookApp : Application() {
         configImageLoader()
 
         startKoin {
-            androidLogger()
+            androidLogger(Level.ERROR)
             androidContext(this@NasaAstronomicalLookApp)
             modules(moduleList)
         }
