@@ -1,20 +1,21 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.jmm.nasaastronomicallook"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        dataBinding {
-            enabled = true
+        buildFeatures {
+            dataBinding true
         }
     }
 
@@ -49,70 +50,77 @@ android {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
 
-    androidExtensions {
-        experimental = true
-    }
-
     testOptions {
         unitTests.returnDefaultValues = true
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlin_version"
 
-    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "androidx.core:core-ktx:$ktx_version"
+    implementation "androidx.appcompat:appcompat:$appCompat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayout_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerView_version"
+    implementation "com.google.android.material:material:$material_version"
 
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    // Saved state module for ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
+    // Annotation processor
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
-    //noinspection LifecycleAnnotationProcessorWithJava8
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
-    kapt "com.android.databinding:compiler:$gradle_version"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttp3_version")
 
-    implementation("com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3Version")
+    implementation("com.jakewharton.threetenabp:threetenabp:$threeTenAbp_version")
 
-    implementation("com.jakewharton.threetenabp:threetenabp:$rootProject.threeTenAbpVersion")
-
-    testImplementation("org.threeten:threetenbp:$rootProject.threeTenBpVersion") {
+    testImplementation("org.threeten:threetenbp:$threeTenBp_version") {
         exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
     }
 
-    implementation("org.koin:koin-android-scope:$koin_version")
-    implementation("org.koin:koin-android-viewmodel:$koin_version")
-    // Koin for Unit tests
-    testImplementation("org.koin:koin-test:$koin_version")
 
-    implementation("io.coil-kt:coil:0.7.0")
-    implementation("io.coil-kt:coil-gif:0.7.0")
 
-    testImplementation ('junit:junit:4.12')
-    androidTestImplementation ('androidx.test.ext:junit:1.1.1')
-    androidTestImplementation ('androidx.test.espresso:espresso-core:3.2.0')
+    // Koin for Android
+    implementation "io.insert-koin:koin-android:$koin_version"
 
-    //TEST LIBRERIES
+    // Koin Test
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+
+    // Koin for Kotlin apps
+    implementation "io.insert-koin:koin-core:$koin_version"
+    // Testing
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+
+
+    implementation("io.coil-kt:coil:$coil_version")
+    implementation("io.coil-kt:coil-gif:$coil_version")
+
+    //TEST
+    testImplementation ("junit:junit:$junit_version")
+    androidTestImplementation ('androidx.test.ext:junit:1.1.3')
+    androidTestImplementation ('androidx.test.espresso:espresso-core:3.4.0')
+
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     testImplementation("junit:junit:$junit_version")
     testImplementation("org.mockito:mockito-core:$mockito_version")
     testImplementation("com.nhaarman:mockito-kotlin:$mockitoKotlin_version")
     testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitMock_version")
-    testImplementation("com.squareup.okhttp3:mockwebserver:$okhttp3Mock_version")
+    testImplementation("com.squareup.okhttp3:mockwebserver:$okhttp3_version")
     testImplementation("org.powermock:powermock-core:$powermock_version")
     testImplementation("org.powermock:powermock-module-junit4:$powermock_version")
     testImplementation("org.powermock:powermock-module-junit4-rule:$powermock_version")
     testImplementation("org.powermock:powermock-api-mockito2:$powermock_version")
     testImplementation("com.squareup.assertj:assertj-android:$assertj_version")
     testImplementation("org.amshove.kluent:kluent:$kluent_version")
-
 }
