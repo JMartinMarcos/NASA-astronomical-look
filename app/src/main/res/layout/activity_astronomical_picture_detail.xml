@@ -31,7 +31,9 @@
                 app:collapsedTitleGravity="center"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:title="Astronomic Image of the Day"
-                app:toolbarId="@id/toolbar">
+                app:toolbarId="@id/toolbar"
+                android:fitsSystemWindows="true"
+                >
 
                 <ImageView
                     android:id="@+id/detail_image"
